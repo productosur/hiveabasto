@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <p:panel header="Reporte de Repartos" >  
+
+            <h:form id="form">  
+                
+                <p:growl id="msgs" /> 
+
+                <p:dataTable id="delivery" var="delivery" value="#{deliverymb.deliveriesList}" 
+                             rowKey="#{delivery.id}" selection="#{deliverymb.selectedDelivery}" 
+                             selectionMode="single" emptyMessage="No hay Datos"
+                             paginator="true" rows="10">   
+                    <f:facet name="header">  
+                        Seleccione Reparto
+                    </f:facet>  
+
+                    <p:column headerText="Fecha Reparto">  
+                        #{delivery.initTime}  
+                    </p:column>  
+
+                    <p:column headerText="Camión">  
+                        #{delivery.truckId.brand}  
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        <p:commandButton id="viewButton" value="Ver Datos" icon="ui-icon-search"  
+                                         update=":form:display"/> 
+                    </f:facet>  
+
+                </p:dataTable>  
+
+ <div align="center">
+                <p:panel id="display3" header="Detalle del Reparto" style="margin-top:10px;">  
+                    <h:panelGrid id="display" columns="2"> 
+
+                   
+                        <p:dataTable id="deliveryTable" var="deliveryStock" 
+                                     value="#{deliverymb.selectedDelivery.deliveryStockCollection}" 
+                                     rowKey="#{deliveryStock.id}" 
+                                     editable="true" emptyMessage="No hay Datos"  paginator="true" rows="10">   
+                            <f:facet name="header">  
+                                Líneas del Reparto
+                            </f:facet>  
+
+                            <p:ajax event="rowEdit" listener="#{deliverymb.onEdit}"  update=":form:msgs"/>  
+                <p:ajax event="rowEditCancel" listener="#{deliverymb.onCancel}" update=":form:msgs"/>
+
+                
+                            <p:column headerText="Producto">  
+                                #{deliveryStock.productId.name}  
+                            </p:column> 
+                            
+                            
+                
+                
+                <p:column headerText="Stock Reparto" style="width:25%">  
+                    <p:cellEditor>  
+                        <f:facet name="output">
+                            <h:outputText value="#{deliveryStock.initialStock}" /></f:facet>  
+                        <f:facet name="input">
+                            <p:inputText id="modelInput" value="#{deliveryStock.initialStock}" style="width:96%"/></f:facet>  
+                    </p:cellEditor>  
+                </p:column>  
+                
+                <p:column headerText="Stock Final">  
+                                #{deliveryStock.finalStock}  
+                            </p:column>
+                
+                          <p:column style="width:6%">  
+                    <p:rowEditor />  
+                </p:column>   
+                           
+                        </p:dataTable>
+
+                    </h:panelGrid>  
+                </p:panel>  
+ </div>
+            </h:form>
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
+

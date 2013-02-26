@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">  
+  
+            <p:dataTable id="clients" var="client" value="#{clientsmb.clientsList}" rowKey="#{client.name}"  
+                 selection="#{clientsmb.selectedClient}" selectionMode="single"
+                  paginator="true" rows="5">   
+        <f:facet name="header">  
+            Seleccione Cliente
+        </f:facet>  
+  
+        <p:column headerText="Nombre">  
+            #{client.businessName}  
+        </p:column>  
+  
+        <p:column headerText="Rut">  
+            #{client.rut}  
+        </p:column> 
+  
+        <f:facet name="footer">  
+            <p:commandButton id="viewButton" value="View" icon="ui-icon-search"  
+                    update=":form:display"/> 
+           
+        </f:facet>  
+  
+    </p:dataTable>  
+  
+<!--    <p:dialog id="dialog" header="Detalle del Cliente" widgetVar="clientDialog" resizable="false"  
+              width="200" showEffect="clip" hideEffect="fold">  
+  
+        <h:panelGrid id="display2" columns="2" cellpadding="4">  
+  
+            <f:facet name="header">  
+                <p:graphicImage value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg"/>  
+            </f:facet>  
+  
+            <h:outputText value="Nombre:" />  
+            <h:outputText value="#{clientsmb.selectedClient.name}" />  
+  
+            <h:outputText value="Rut:" />  
+            <h:outputText value="#{clientsmb.selectedClient.rut}" />  
+  
+        </h:panelGrid>  
+    </p:dialog>  -->
+  <p:panel id="display3" header="Information" style="margin-top:10px;">  
+        <h:panelGrid id="display" columns="2">  
+            <h:outputText value="Nombre " />  
+            <h:outputText value="#{clientsmb.selectedClient.name}" />  
+              
+            <h:outputText value="Rut " />  
+            <h:outputText value="#{clientsmb.selectedClient.rut}" />  
+        </h:panelGrid>  
+    </p:panel>  
+</h:form>  
+    </h:body>
+</html>
+

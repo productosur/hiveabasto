@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+        <h:form>
+            <p:panelMenu>
+                
+                <p:submenu label="Inicio">
+                    <p:menuitem value="Volver Inicio" outcome="/welcomePrimefaces" />
+                </p:submenu>
+                
+                <p:submenu label="Clientes">
+                    <p:menuitem value="Clientes" outcome="/pages/clients_subsidiary" />
+                    <p:menuitem value="Nuevo Cliente" outcome="/pages/clients_create" />
+                </p:submenu>
+                
+                <p:submenu label="Proveedores">
+                    <p:menuitem value="Proveedores" outcome="/pages/manufacturers.xhtml" />
+                    <p:menuitem value="Nuevo Proveedor" outcome="/pages/manufacturers_create" />
+                </p:submenu>
+                
+                <p:submenu label="Productos">
+                    <p:menuitem value="Productos" outcome="/pages/products" />
+                    <p:menuitem value="Nuevo Producto" outcome="/pages/products_create" />
+                    <p:menuitem value="Familias" outcome="/pages/products_families" />
+                    <p:menuitem value="Nueva Familia" outcome="/pages/products_families_create" />
+                     <p:menuitem value="Stock de Productos" outcome="/pages/products_stocks" />
+                     
+                </p:submenu>
+                
+                <p:submenu label="Pedidos">
+                    <p:menuitem value="Listado de Pedidos" outcome="/pages/sales_report" /> 
+                    <p:menuitem value="Compra Frigorifico" outcome="/pages/frigo_purchases" />
+                </p:submenu>
+                
+                <p:submenu label="Compras y Repartos">
+                    <p:menuitem value="Compras" outcome="/pages/purchases_report" />
+                    <p:menuitem value="Ingreso de Compra" outcome="/pages/purchases" />
+                    <p:menuitem value="Repartos" outcome="/pages/delivery_report" />
+                    <p:menuitem value="Crear Reparto" outcome="/pages/delivery_create" />       
+                </p:submenu>
+                
+<!--                <p:submenu label="Reportes">
+                    <p:menuitem value="Reporte de Ventas" outcome="/pages/sales_report" />
+                    <p:menuitem value="Reporte de Productos Vendidos" outcome="/pages/clients_subsidiary" />
+                    <p:menuitem value="Reporte de Clientes" outcome="/pages/clients_subsidiary" />
+                </p:submenu>-->
+
+            </p:panelMenu>
+        </h:form>
+    </h:body>
+</html>
+

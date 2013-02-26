@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">
+         
+   
+        
+        <h:form id="form">  
+  
+            <p:dataTable id="products" var="manufacturer" value="#{manufacturermb.manufacturersList}" 
+                         rowKey="#{manufacturer.id}"   sortBy="#{manufacturer.name}" emptyMessage="No se encontraron Datos"
+                         selection="#{manufacturermb.selectedManufacturer}" selectionMode="single"
+                  paginator="true" rows="10">   
+        <f:facet name="header">  
+            Seleccione Proveedor
+        </f:facet>  
+  
+        <p:column sortBy="#{manufacturer.name}" headerText="Nombre">  
+            #{manufacturer.name}  
+        </p:column> 
+                <p:column sortBy="#{manufacturer.address}" headerText="Dirección">  
+            #{manufacturer.address}  
+        </p:column> 
+  
+                <p:column sortBy="#{manufacturer.phone}" headerText="Teléfono">  
+            #{manufacturer.phone}  
+        </p:column> 
+  
+        <f:facet name="footer">  
+          <p:commandButton id="viewButton" value="Ver Datos" icon="ui-icon-search"  
+                    update=":form:display"/> 
+          <p:commandButton id="changeButton" value="Modificar Datos"
+                   /> 
+          <p:commandButton id="refreshButton" value="Actualizar Vista"   
+                           actionListener="#{manufacturermb.refreshList}" ajax="false"/> 
+        </f:facet>  
+  
+    </p:dataTable>  
+  
+  <p:panel id="display3" header="Información" style="margin-top:10px;">  
+        <h:panelGrid id="display" columns="2"> 
+            
+            <h:outputText value="Nombre: " />  
+            <h:inputText value="#{manufacturermb.selectedManufacturer.name}" />         
+            
+        </h:panelGrid>  
+    </p:panel>  
+    </h:form>
+               
+   
+          </ui:define>
+</ui:composition>
+

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+
+
+        <h:form id="form">  
+ <p:growl id="msgs" /> 
+            <p:dataTable id="orders" var="order" value="#{ordersmb.ordersList}" 
+                         rowKey="#{order.id}" selection="#{ordersmb.selectedOrder}" 
+                         selectionMode="single" emptyMessage="No hay Datos"
+                         paginator="true" rows="10">   
+                <f:facet name="header">  
+                    Seleccione Pedido
+                </f:facet>  
+
+                <p:column headerText="Fecha">  
+                    #{order.date}  
+                </p:column>  
+
+                <p:column headerText="Cliente">  
+                    #{order.subsidiaryId.clientId.name}  
+                </p:column> 
+
+                <f:facet name="footer">  
+                    <p:commandButton id="viewButton" value="Ver Datos" icon="ui-icon-search"  
+                                     update=":form:display"/> 
+                    <p:commandButton id="saleButton" value="Vender"   
+                                     action="sales?faces-redirect=true" ajax="false"/> 
+                    <p:commandButton id="ctacteButton" value="Cuenta Corriente"   
+                                     action="clients_cta_cte?faces-redirect=true" ajax="false"/> 
+                </f:facet>  
+
+            </p:dataTable>  
+            
+           
+            <p:panel id="display3" header="Information" style="margin-top:10px;">  
+                <h:panelGrid id="display" columns="2"> 
+
+                    <h:outputText value="Fecha " />  
+                    <h:outputText value="#{ordersmb.selectedOrder.date}" />         
+
+                    <h:outputText value="Vendedor " />  
+                    <h:outputText value="#{ordersmb.selectedOrder.employeeId.firstName}" />  
+
+
+                    <p/>
+                    <p/>
+                    
+                    <p:dataTable id="ordersLines" var="orderLine" value="#{ordersmb.selectedOrder.orderlinesCollection}" 
+                                 rowKey="#{orderLine.id}" selection="#{ordersmb.selectedOrderLine}" 
+                                 editable="true" emptyMessage="No hay Datos"  paginator="true" rows="10">   
+                        <f:facet name="header">  
+                            Líneas del Pedido
+                        </f:facet>  
+
+                        <p:ajax event="rowEdit" listener="#{ordersmb.onEdit}"  update=":form:msgs"/>  
+                        <p:ajax event="rowEditCancel" listener="#{ordersmb.onCancel}" update=":form:msgs"/>
+
+                        <p:column headerText="Producto">  
+                            #{orderLine.productId.name}  
+                        </p:column>  
+
+                        <p:column headerText="Cantidad" style="width:25%">  
+                            <p:cellEditor>  
+                                <f:facet name="output">
+                                    <h:outputText value="#{orderLine.quantity}" /></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText id="modelInput" value="#{orderLine.quantity}" style="width:96%"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>  
+
+
+                        <p:column headerText="Precio Unitario">  
+                            #{orderLine.price/orderLine.quantity}  
+                        </p:column>
+                        
+                        <p:column headerText="Precio" style="width:25%">  
+                            <p:cellEditor>  
+                                <f:facet name="output">
+                                    <h:outputText value="#{orderLine.price}" /></f:facet>  
+                                <f:facet name="input">
+                                    <p:inputText id="priceInput" value="#{orderLine.price}" style="width:96%"/></f:facet>  
+                            </p:cellEditor>  
+                        </p:column>
+                        
+                        
+
+ <p:column style="width:6%">  
+            <p:rowEditor />  
+        </p:column>  
+                    </p:dataTable>
+                         
+                </h:panelGrid>  
+            </p:panel>  
+               
+        </h:form>
+
+
+    </ui:define>
+</ui:composition>
+

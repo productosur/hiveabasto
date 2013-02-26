@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <h:form id="form">  
+            <p:growl id="msgs" />  
+  
+            <p:panel header="Nuevo Pedido de: #{salesmb.client.name}" >  
+        <h:panelGrid columns="2" id="grid">  
+            <h:outputLabel value="Producto: *" for="basicPojo"></h:outputLabel>  
+            
+            <p:autoComplete value="#{salesmb.orderLine.productId}" id="basicPojo" 
+                            completeMethod="#{salesmb.completeProducts}"  
+                            var="p" itemLabel="#{p.name}" itemValue="#{p}" converter="#{salesmb.converter}"
+                            forceSelection="true"  minQueryLength="3" required="true"
+                            requiredMessage="Debe seleccionar un Producto"  
+                            >  
+            </p:autoComplete>
+            
+              
+            <h:outputLabel value="Cantidad: *" for="txt_cantidad"></h:outputLabel>  
+            <p:inputText id="txt_cantidad" required="true" requiredMessage="La cantidad es obligatoria"  
+                         value="#{salesmb.orderLine.quantity}" />  
+            
+            <h:outputLabel value="Precio: " for="txt_precio"></h:outputLabel>
+            <p:inputText id="txt_precio" 
+                         value="#{salesmb.orderLine.price}"  />  
+              
+            <p:commandButton value="Limpiar" type="reset"/>  
+            <p:commandButton id="btn_add" value="Agregar" update="products msgs grid"  
+                             action="#{salesmb.reinit}" process="products grid"
+                             actionListener="#{salesmb.processLine}">  
+                <p:collector value="#{salesmb.orderLine}"   
+                             addTo="#{salesmb.orderLinesList}" />  
+            </p:commandButton>  
+        </h:panelGrid>  
+    </p:panel>  
+      
+    <p:outputPanel id="products">  
+        <p:dataTable id="productsTable" value="#{salesmb.orderLinesList}" var="ol"
+                     emptyMessage="No hay lineas agregadas al pedido">  
+  
+            <p:column>  
+                <f:facet name="header">  
+                    <h:outputText value="Producto" />  
+                </f:facet>  
+                <h:outputText value="#{ol.productId.name}" />  
+            </p:column>  
+            <p:column>  
+                <f:facet name="header">  
+                    <h:outputText value="Cantidad" />  
+                </f:facet>  
+                <h:outputText value="#{ol.quantity}" />  
+            </p:column>
+            <p:column>  
+                <f:facet name="header">  
+                    <h:outputText value="Precio" />  
+                </f:facet>  
+                <h:outputText value="#{ol.price}" />  
+            </p:column>
+  
+            <p:column>  
+                <f:facet name="header">  
+                    <h:outputText value="Operation" />  
+                </f:facet>  
+                <p:commandLink value="Remove" update=":form:products" process=":form:products">  
+                    <p:collector value="#{ol}"  
+                                 removeFrom="#{salesmb.orderLinesList}" />  
+                </p:commandLink>  
+            </p:column>  
+  
+        </p:dataTable> 
+        <p/>
+        <p/>
+        <p/>
+        <div align="right">
+<!--        <h:outputText value="IVA Minimo: "/>
+        <h:outputText value=" #{salesmb.ivaMin}"/>
+        <p/>
+        <h:outputText value="IVA Basico: "/>
+        <h:outputText value=" #{salesmb.ivaBas}"/>-->
+      <p/>
+        <h:outputText value="Total: "/>
+        <h:outputText value=" #{salesmb.total}"/>
+        </div>
+        
+        
+    </p:outputPanel>  
+        </h:form>
+        <p/>
+        
+        <div align="right">
+        <h:form>
+            <p:commandButton id="saleButtonConfirm" value="Confirmar"  icon="ui-icon-save" 
+                             actionListener="#{salesmb.saveOrder}" ajax="false"/> 
+        </h:form>
+            </div>
+    </ui:define>
+</ui:composition>

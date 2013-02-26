@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">
+         
+   
+        
+        <h:form id="form">  
+  
+            <p:dataTable id="productstock" var="productstock" value="#{productstockmb.productStockList}" 
+                         rowKey="#{productstock.id}"   sortBy="#{productstock.productId.name}" 
+                         emptyMessage="No se encontraron Datos"
+                         selection="#{productstockmb.selectedProductstocks}" selectionMode="single"
+                  paginator="true" rows="10">   
+        <f:facet name="header">  
+            Seleccione Producto
+        </f:facet>  
+  
+                <p:column sortBy="#{productstock.productId.name}" headerText="Nombre">  
+            #{productstock.productId.name}  
+        </p:column>  
+  
+         <p:column sortBy="#{productstock.productId.inacCode}" headerText="Código Inac">  
+            #{productstock.productId.inacCode}  
+        </p:column>
+                
+        <p:column sortBy="#{productstock.productId.name}" headerText="Código">  
+            #{productstock.productId.code}  
+        </p:column> 
+                
+        <p:column sortBy="#{productstock.value}" headerText="Stock">  
+            #{productstock.value}  
+        </p:column> 
+                
+        <f:facet name="footer">  
+          <p:commandButton id="viewButton" value="Ver Datos" icon="ui-icon-search"  
+                    update=":form:display3"/> 
+          <p:commandButton id="changeButton" value="Modificar Datos"
+                   /> 
+           
+        </f:facet>  
+  
+    </p:dataTable>  
+  
+  <p:panel id="display3" header="Información" style="margin-top:10px;">  
+        <h:panelGrid id="display" columns="2"> 
+            
+<!--            <h:outputText value="Nombre: " />  
+            <h:inputText value="#{productsmb.selectedProduct.name}" />         
+
+            <h:outputText value="Proveedor: " />  
+            <h:inputText value="#{productsmb.selectedProduct.manufacturerId.name}" />  
+              
+            <h:outputText value="Precio: " />  
+            <h:inputText value="#{productsmb.selectedProduct.price}" /> 
+            
+            <h:outputText value="Email: " />  
+            <h:inputText value="#{productsmb.selectedProduct.productscategoryId.name}" /> 
+            -->
+        </h:panelGrid>  
+    </p:panel>  
+    </h:form>
+               
+   
+          </ui:define>
+</ui:composition>
+

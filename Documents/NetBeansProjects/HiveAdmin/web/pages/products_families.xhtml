@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">
+         
+   
+        
+        <h:form id="form">  
+  
+            <p:dataTable id="products" var="productfamily" value="#{productsfamiliesmb.productsFamiliesList}" 
+                         rowKey="#{productfamily.id}"   sortBy="#{productfamily.name}" emptyMessage="No se encontraron Datos"
+                         selection="#{productsfamiliesmb.selectedProductFamily}" selectionMode="single"
+                  paginator="true" rows="10">   
+        <f:facet name="header">  
+            Seleccione Familia de Producto
+        </f:facet>  
+  
+        <p:column sortBy="#{productfamily.name}" headerText="Nombre">  
+            #{productfamily.name}  
+        </p:column>  
+  
+  
+        <f:facet name="footer">  
+          <p:commandButton id="viewButton" value="Ver Datos" icon="ui-icon-search"  
+                    update=":form:display"/> 
+          <p:commandButton id="changeButton" value="Modificar Datos"
+                   /> 
+          <p:commandButton id="refreshButton" value="Actualizar Vista"   
+                           actionListener="#{productsfamiliesmb.refreshList}" ajax="false"/> 
+        </f:facet>  
+  
+    </p:dataTable>  
+  
+  <p:panel id="display3" header="Información" style="margin-top:10px;">  
+        <h:panelGrid id="display" columns="2"> 
+            
+<!--            <h:outputText value="Nombre: " />  
+            <h:inputText value="#{productsfamiliesmb.selectedProductFamily.name}" />         
+            -->
+        </h:panelGrid>  
+    </p:panel>  
+    </h:form>
+               
+   
+          </ui:define>
+</ui:composition>
+

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">
+         
+   
+        
+        <h:form id="form">  
+  
+  <p:panel id="display3" header="Alta de Proveedor" style="margin-top:10px;">  
+        <h:panelGrid id="display" columns="2" > 
+            
+            <h:outputText value="Nombre: " />  
+            <h:inputText value="#{manufacturermb.newManufacturer.name}" /> 
+            <h:outputText value="Dirección: " />  
+            <h:inputText value="#{manufacturermb.newManufacturer.address}" /> 
+            <h:outputText value="Teléfono: " />  
+            <h:inputText value="#{manufacturermb.newManufacturer.phone}" /> 
+            <h:outputText value="Contacto: " />  
+            <h:inputText value="#{manufacturermb.newManufacturer.contactName}" /> 
+            <h:outputText value="Comentarios: " />  
+            <h:inputText value="#{manufacturermb.newManufacturer.description}" /> 
+            <p></p>
+            <p></p>
+            
+            <p:commandButton id="saveButton" value="Guardar Datos" actionListener="#{manufacturermb.saveDataAction}" 
+                              ajax="false"  icon="ui-icon-save"/> 
+          
+            <p></p>
+            <p></p>
+            <p:commandButton id="clearButton" value="Limpiar Datos" actionListener="#{manufacturermb.clearDataAction}" 
+                              ajax="false"  icon="ui-icon-save"/> 
+          
+            
+        </h:panelGrid>  
+    </p:panel>  
+    </h:form>
+               
+          </ui:define>
+</ui:composition>

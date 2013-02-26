@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="HiveAdminPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.productosur.hive.entities.Employees</class>
+    <class>com.productosur.hive.entities.TraceRoute</class>
+    <class>com.productosur.hive.entities.Orderlines</class>
+    <class>com.productosur.hive.entities.Payments</class>
+    <class>com.productosur.hive.entities.UomCovertionFactors</class>
+    <class>com.productosur.hive.entities.Products</class>
+    <class>com.productosur.hive.entities.Accesses</class>
+    <class>com.productosur.hive.entities.Permissions</class>
+    <class>com.productosur.hive.entities.Currencies</class>
+    <class>com.productosur.hive.entities.Clientsaccounts</class>
+    <class>com.productosur.hive.entities.Manufacturers</class>
+    <class>com.productosur.hive.entities.Specialdiscounts</class>
+    <class>com.productosur.hive.entities.Orderstates</class>
+    <class>com.productosur.hive.entities.Productscategories</class>
+    <class>com.productosur.hive.entities.Orders</class>
+    <class>com.productosur.hive.entities.Users</class>
+    <class>com.productosur.hive.entities.Taxes</class>
+    <class>com.productosur.hive.entities.Orderstaterecords</class>
+    <class>com.productosur.hive.entities.DailyRoutes</class>
+    <class>com.productosur.hive.entities.Paymentformats</class>
+    <class>com.productosur.hive.entities.Subsidiaries</class>
+    <class>com.productosur.hive.entities.EmployeesRoles</class>
+    <class>com.productosur.hive.entities.Uom</class>
+    <class>com.productosur.hive.entities.Paydocuments</class>
+    <class>com.productosur.hive.entities.Productstocks</class>
+    <class>com.productosur.hive.entities.Documentypes</class>
+    <class>com.productosur.hive.entities.Ordertypes</class>
+    <class>com.productosur.hive.entities.Discounts</class>
+    <class>com.productosur.hive.entities.Clients</class>
+    <class>com.productosur.hive.entities.Paynumberselections</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hivefimecor?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+    </properties>
+  </persistence-unit>
+</persistence>

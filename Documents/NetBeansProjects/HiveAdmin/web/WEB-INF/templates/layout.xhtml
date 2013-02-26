@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Hive Admin</title>
+    </h:head>
+    <h:body>
+        <p:growl id="msgs" />  
+
+        <p:layout fullPage="true">
+<!--            <p:layoutUnit position="north" size="170"  resizable="false" closable="false" collapsible="false">
+                <div align="center">
+                    <h:graphicImage id="image" alt="Empresa" url="/resources/images/hive2.jpg"></h:graphicImage>   
+                </div>
+            </p:layoutUnit>-->
+
+            <p:layoutUnit position="south" size="100" header="Navegacion" resizable="true" closable="true" collapsible="true">
+                <p:dock>  
+                    <p:menuitem value="Gmail" icon="/resources/images/google_32.png" url="http://www.gmail.com" target="newPopup"/>  
+                    <p:menuitem value="Noticias" icon="/resources/images/rss_32.png" url="http://www.elpais.com.uy" target="newPopup"/>  
+                    <p:menuitem value="Video" icon="/resources/images/facebook_32.png" url="#"/>  
+                    <p:menuitem value="Email" icon="/resources/images/delicious_32.png" url="#"/>  
+                    <p:menuitem value="Portfolio" icon="/resources/images/aim_32.png" url="#"/>  
+                   
+                </p:dock>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="200" header="Menú" resizable="true" 
+                          closable="true" collapsible="true">
+                <h:form>
+                    <ui:include src="../templates/menu.xhtml" />
+                </h:form>
+            </p:layoutUnit>
+
+            <!--            <p:layoutUnit position="east" size="200" header="Right" resizable="true" closable="true" collapsible="true" effect="drop">
+                            <h:outputText value="Right unit content." />
+                        </p:layoutUnit>-->
+
+            <p:layoutUnit position="center">
+                <ui:insert name="content"></ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+
+    </h:body>
+</html>
+

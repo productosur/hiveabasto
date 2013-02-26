@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <h:form id="form">  
+            <p:growl id="msgs" />  
+
+            <p:panel header="Nueva Compra">  
+                <h:panelGrid columns="2" id="grid"> 
+
+
+                    <h:outputLabel value="Fecha de Compra *" for="purchDate"></h:outputLabel>
+                    <p:calendar value="#{purchasesmb.purchaseDate}" id="purchDate" pattern="dd/MM/yyyy"
+                                required="true" requiredMessage="La fecha de compra es obligatoria">  
+                        <p:ajax event="dateSelect"/>  
+                    </p:calendar> 
+
+                    <h:outputLabel value="Fecha de Vencimiento " for="expDate"></h:outputLabel>
+                    <p:calendar value="#{purchasesmb.expirationDate}"  id="expDate" pattern="dd/MM/yyyy">  
+                        <p:ajax event="dateSelect"/>  
+                    </p:calendar>
+                    
+                     <h:outputLabel value="Número de Factura: *" for="txt_number"></h:outputLabel>
+                    <p:inputText id="txt_number" 
+                                 value="#{purchasesmb.invoiceNumber}" required="true"/> 
+
+                    <h:outputLabel value="Tipo de Documento: " for="document_type"/>  
+                    <h:selectOneMenu id="document_type" value="#{purchasesmb.selectedDocumentypes}" required="true"
+                                     converter="#{purchasesmb.documentTypeConverter}">  
+                        <f:selectItems value="#{purchasesmb.documentTypesList}" />  
+                    </h:selectOneMenu> 
+                   
+                    <h:outputLabel value="Proveedor: *" for="manufacturer"></h:outputLabel>  
+
+                    <p:autoComplete value="#{purchasesmb.selectedManufacturer}" id="manufacturer" 
+                                    completeMethod="#{purchasesmb.completeManufacturers}"  
+                                    var="p" itemLabel="#{p.name}" itemValue="#{p}" 
+                                    converter="#{purchasesmb.manufacturConverter}"
+                                    forceSelection="true"  minQueryLength="3" required="true"
+                                    requiredMessage="Debe seleccionar un Proveedor">  
+                    </p:autoComplete>
+
+
+                    <h:outputLabel value="Comentarios: " for="comentarios"></h:outputLabel>
+                    <p:inputText id="comentarios" 
+                                 value="#{purchasesmb.description}" /> 
+
+                    <h:outputLabel value="Producto: *" for="productos"></h:outputLabel>  
+
+                    <p:autoComplete value="#{purchasesmb.purchaseLine.productId}" id="productos" 
+                                    completeMethod="#{purchasesmb.completeProducts}"  
+                                    var="p" itemLabel="#{p.name}" itemValue="#{p}" converter="#{purchasesmb.productConverter}"
+                                    forceSelection="true"  minQueryLength="3" required="true"
+                                    requiredMessage="Debe seleccionar un Producto">  
+                    </p:autoComplete>
+
+
+                    <h:outputLabel value="Peso: *" for="txt_quantity"></h:outputLabel>  
+                    <p:inputText id="txt_quantity" required="true" requiredMessage="El peso es obligatoria"  
+                                 value="#{purchasesmb.purchaseLine.quantity}" />  
+
+                    <h:outputLabel value="Precio x Kg: *" for="txt_precio" ></h:outputLabel>
+                    <p:inputText id="txt_precio" 
+                                 value="#{purchasesmb.purchaseLine.buyPrice}" 
+                                 required="true" requiredMessage="El precio de Compra es obligatoria" />  
+
+
+                    <p:commandButton value="Limpiar" type="reset"/>  
+                    <p:commandButton id="btn_add" value="Agregar" update="products msgs grid"  
+                                     action="#{purchasesmb.reinit}" process="products grid"
+                                     actionListener="#{purchasesmb.processLine}">  
+                        <p:collector value="#{purchasesmb.purchaseLine}"   
+                                     addTo="#{purchasesmb.purchasesLinesList}" />  
+                    </p:commandButton>  
+
+                </h:panelGrid>  
+            </p:panel>  
+
+            <p:outputPanel id="products">  
+                <p:dataTable id="productsTable" value="#{purchasesmb.purchasesLinesList}" var="ol"
+                             emptyMessage="No hay lineas agregadas a la compra">  
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Producto" />  
+                        </f:facet>  
+                        <h:outputText value="#{ol.productId.name}" />  
+                    </p:column>  
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Peso" />  
+                        </f:facet>  
+                        <h:outputText value="#{ol.quantity}" />  
+                    </p:column>
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Precio x Kg" />  
+                        </f:facet>  
+                        <h:outputText value="#{ol.buyPrice}" />  
+                    </p:column>
+
+                     <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Costo" />  
+                        </f:facet>  
+                        <h:outputText value="#{ol.buyPrice * ol.quantity}" />  
+                    </p:column>
+                    
+                    <p:column>  
+                        <f:facet name="header">  
+                            <h:outputText value="Operation" />  
+                        </f:facet>  
+                        <p:commandLink value="Remove" update=":form:products" process=":form:products">  
+                            <p:collector value="#{ol}"  
+                                         removeFrom="#{purchasesmb.purchasesLinesList}" />  
+                        </p:commandLink>  
+                    </p:column>  
+
+                </p:dataTable> 
+
+                
+                <p/>
+                <p/>
+                <p/>
+                <div align="right">
+                    <h:outputText value="Total: "/>
+                    <h:outputText value=" #{purchasesmb.total}"/>
+                </div>
+
+
+            </p:outputPanel>  
+        </h:form>
+        <p/>
+
+        <div align="right">
+            <h:form>
+                <p:commandButton id="purchaseButtonConfirm" value="Guardar Compra"   
+                                 actionListener="#{purchasesmb.savePurchase}" ajax="false"/> 
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

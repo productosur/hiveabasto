@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+        <p:panel header="Cuenta Corriente de: #{ctactemb.client.clientId.businessName}" >  
+
+            <h:form id="form">  
+                <p:growl id="msgs" /> 
+
+                <p:dataTable id="paydocuments" var="paydocument" value="#{ctactemb.paydocumentList}" 
+                             rowKey="#{paydocument.id}" selection="#{ctactemb.selectedPaydocument}" 
+                             selectionMode="single" emptyMessage="No hay Datos"
+                             paginator="true" rows="10">   
+                    <f:facet name="header">  
+                        Seleccione Documento
+                    </f:facet>  
+
+                    <p:column headerText="Fecha">  
+                        #{paydocument.date}  
+                    </p:column>  
+
+                    <p:column headerText="Cliente">  
+                        #{paydocument.clientsId.businessName}  
+                    </p:column>
+
+                    <p:column headerText="Monto">  
+                        #{paydocument.orderId.totalPrice}  
+                    </p:column>
+
+                    <f:facet name="footer">  
+                        <p:commandButton id="viewButton" value="Ver Datos" icon="ui-icon-search"  
+                                         update=":form:display"/> 
+                        <p:commandButton id="saleButton" value="Vender"   
+                                         action="sales?faces-redirect=true" ajax="false"/> 
+
+                    </f:facet>  
+
+                </p:dataTable>  
+
+ <div align="center">
+                <p:panel id="display3" header="Detalle del Documento" style="margin-top:10px;">  
+                    <h:panelGrid id="display" columns="2"> 
+
+                        <h:outputText value="Fecha " />  
+                        <h:outputText value="#{ctactemb.selectedPaydocument.date}" />         
+
+                        <h:outputText value="Cliente " />  
+                        <h:outputText value="#{ctactemb.selectedPaydocument.clientsId.businessName}" />  
+
+                         <h:outputText value="Tipo de Documento " />  
+                         <h:outputText value="#{ctactemb.selectedPaydocument.documentypeId.name}" />  
+                         
+                         <h:outputText value="Monto " />  
+                         <h:outputText value="#{ctactemb.selectedPaydocument.orderId.totalPrice}" />  
+
+                        <p/>
+                        <p/>
+
+                        <p:dataTable id="ordersLines" var="orderLine" 
+                                     value="#{ctactemb.selectedPaydocument.orderId.orderlinesCollection}" 
+                                     rowKey="#{orderLine.id}" 
+                                     editable="true" emptyMessage="No hay Datos"  paginator="true" rows="10">   
+                            <f:facet name="header">  
+                                Líneas del Pedido
+                            </f:facet>  
+
+                          
+                            <p:column headerText="Producto">  
+                                #{orderLine.productId.name}  
+                            </p:column> 
+                            
+                            <p:column headerText="Cantidad">  
+                                #{orderLine.quantity}  
+                            </p:column> 
+                            
+                            <p:column headerText="Precio Unitario">  
+                                #{orderLine.price/orderLine.quantity}  
+                            </p:column> 
+                            
+                            <p:column headerText="Precio">  
+                                #{orderLine.price}  
+                            </p:column> 
+
+                        </p:dataTable>
+
+                    </h:panelGrid>  
+                </p:panel>  
+ </div>
+            </h:form>
+        </p:panel>
+
+    </ui:define>
+</ui:composition>
+

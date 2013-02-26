@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+
+
+
+
+
+
+        <h:form id="form"> 
+             <p:growl id="msgs" /> 
+              <p:panel header="Nueva Compra">  
+               
+
+            <h:outputLabel value="Fecha de Reparto: * " for="deliveryDate"></h:outputLabel>
+            <p:calendar value="#{deliverymb.deliveryDate}"  id="deliveryDate" pattern="dd/MM/yyyy" required="true">  
+                        <p:ajax event="dateSelect"/>  
+                    </p:calendar>
+            
+            <h:outputLabel value="Camión: " for="truck"/>  
+            <h:selectOneMenu id="truck" value="#{deliverymb.selectedTruck}" required="true"
+                             converter="#{deliverymb.truckConverter}">  
+                <f:selectItems value="#{deliverymb.truckList}" />  
+            </h:selectOneMenu> 
+            <p:panel>
+            <p:dataTable id="ordersLines" var="delivery" value="#{deliverymb.deliveryStockVOList}" 
+                         rowKey="#{delivery.id}" selection="#{deliverymb.selectedDeliveryVO}" 
+                         editable="true" emptyMessage="No hay Datos"  paginator="true" rows="10">   
+                <f:facet name="header">  
+                    Productos Stock Reparto
+                </f:facet>  
+
+                <p:ajax event="rowEdit" listener="#{deliverymb.onEdit}"  update=":form:msgs"/>  
+                <p:ajax event="rowEditCancel" listener="#{deliverymb.onCancel}" update=":form:msgs"/>
+
+                <p:column headerText="Producto">  
+                    #{delivery.productStockEntitie.productId.name}  
+                </p:column>  
+
+                <p:column headerText="Precio Unitario">  
+                    #{delivery.productStock}  
+                </p:column>
+
+                <p:column headerText="Stock Reparto" style="width:25%">  
+                    <p:cellEditor>  
+                        <f:facet name="output">
+                            <h:outputText value="#{delivery.deliveryStock}" /></f:facet>  
+                        <f:facet name="input">
+                            <p:inputText id="modelInput" value="#{delivery.deliveryStock}" style="width:96%"/></f:facet>  
+                    </p:cellEditor>  
+                </p:column>  
+
+                <p:column style="width:6%">  
+                    <p:rowEditor />  
+                </p:column>  
+            </p:dataTable>
+            <div align="right">
+            <p:commandButton id="saveButton" value="Guardar Datos" actionListener="#{deliverymb.saveDataAction}" 
+                             ajax="false"  icon="ui-icon-save"/> 
+</div>
+</p:panel>
+    
+            </p:panel>  
+        </h:form>
+
+
+
+    </ui:define>
+</ui:composition>
+

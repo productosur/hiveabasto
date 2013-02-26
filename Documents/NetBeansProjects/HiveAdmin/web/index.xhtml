@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Hive Admin</title>
+    </h:head>
+    <h:body>
+        <div align="center">
+        <h:form>
+            <br />
+          <br />
+           <br />
+        <h:graphicImage id="image" alt="Empresa" url="/resources/images/LogoHiveSmall.png"></h:graphicImage>   
+        <br />
+        
+            <br />
+         <br />
+          <br />
+           <br />
+            <br />
+         <br />
+          <br />
+           <br />
+        <h:outputLabel value="Usuario:  " for="txt_usu"></h:outputLabel>  
+            <p:inputText id="txt_usu" required="true" requiredMessage="Ingrese Usuario"  
+                         value="#{loginmb.user}" />
+           <br />
+           <br />
+         <h:outputLabel value="Pasword:  " for="txt_pass"></h:outputLabel>  
+            
+         <p:password id="txt_pass" required="true" requiredMessage="Ingrese Contraseña"  
+                         value="#{loginmb.password}" />
+            <br />
+           <br />
+            <p:commandButton value="Ingresar"   
+            ajax="false" action="welcomePrimefaces?faces-redirect=true"/> 
+        
+        </h:form>
+            </div>
+    </h:body>
+</html>
+

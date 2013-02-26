@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">
+         
+   
+        
+        <h:form id="form">  
+  
+  <p:panel id="display3" header="Alta de Producto" style="margin-top:10px;">  
+        <h:panelGrid id="display" columns="2" > 
+            
+            <h:outputText value="Familia: " />  
+            <h:selectOneMenu id="category" value="#{productsmb.selectedCategory}" required="true"
+                             converter="#{productsmb.categoryConverter}">  
+                <f:selectItems value="#{productsmb.productsCategoriesList}" 
+                               var="cat"
+                               itemLabel="#{cat.name}"
+                               itemValue="#{cat}"/>  
+            </h:selectOneMenu> 
+           
+            
+            <h:outputText value="Nombre Producto: " />  
+            <h:inputText value="#{productsmb.newProduct.name}" />
+            
+            <h:outputText value="Código Interno: " />  
+            <h:inputText value="#{productsmb.newProduct.code}" />
+            
+            <h:outputText value="Código Inac: " />  
+            <h:inputText value="#{productsmb.newProduct.inacCode}" /> 
+            
+            <h:outputText value="Moneda: " />  
+            <h:selectOneMenu id="currencie" value="#{productsmb.selectedCurrencie}" required="true"
+                             converter="#{productsmb.currencieConverter}">  
+               <f:selectItems value="#{productsmb.currencies}" />  
+            </h:selectOneMenu> 
+              
+            <h:outputText value="Proveedor: " />  
+            <h:selectOneMenu id="manufacturer" value="#{productsmb.selectedManufacturer}" required="true"
+                             converter="#{productsmb.manufacturerConverter}">  
+               <f:selectItems value="#{productsmb.manufactersList}" 
+                              var="man"
+                               itemLabel="#{man.name}"
+                               itemValue="#{man}"/>  
+            </h:selectOneMenu> 
+            
+            <p></p>
+            <p></p>
+            
+            <p:commandButton id="saveButton" value="Guardar Datos" actionListener="#{productsmb.saveDataAction}" 
+                              ajax="false"  icon="ui-icon-save"/> 
+          
+            <p></p>
+            <p></p>
+            <p:commandButton id="clearButton" value="Limpiar Datos" actionListener="#{productsmb.clearDataAction}" 
+                              ajax="false"  icon="ui-icon-save"/> 
+          
+            
+        </h:panelGrid>  
+    </p:panel>  
+    </h:form>
+               
+          </ui:define>
+</ui:composition>
