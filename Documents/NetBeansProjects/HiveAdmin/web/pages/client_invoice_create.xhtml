@@ -15,20 +15,23 @@
                 <h:panelGrid columns="2" id="grid"> 
 
 
-                    <h:outputLabel value="Fecha de Compra *" for="purchDate"></h:outputLabel>
+                    <h:outputLabel value="Cliente: " for="txt_number"></h:outputLabel>
+                    <p:outputLabel id="txt_name" 
+                                   value="#{invoicemb.client.clientId.businessName}"/> 
+                    <h:outputLabel value="Fecha de Compra: *" for="purchDate"></h:outputLabel>
                     <p:calendar value="#{invoicemb.invoiceDate}" id="purchDate" pattern="dd/MM/yyyy"
                                 required="true" requiredMessage="La fecha de venta es obligatoria">  
                         <p:ajax event="dateSelect"/>  
                     </p:calendar> 
 
-                    <h:outputLabel value="Fecha de Vencimiento " for="expDate"></h:outputLabel>
+                    <h:outputLabel value="Fecha de Vencimiento: " for="expDate"></h:outputLabel>
                     <p:calendar value="#{invoicemb.expirationDate}"  id="expDate" pattern="dd/MM/yyyy">  
                         <p:ajax event="dateSelect"/>  
                     </p:calendar>
                     
-                     <h:outputLabel value="Número de Factura: *" for="txt_number"></h:outputLabel>
-                    <p:inputText id="txt_number" 
-                                 value="#{invoicemb.invoiceNumber}" required="true"/> 
+                     <h:outputLabel value="Número de Factura: " for="txt_number"></h:outputLabel>
+                    <p:outputLabel id="txt_number" 
+                                   value="#{invoicemb.serial} #{invoicemb.invoiceNumber}" /> 
 
                     <h:outputLabel value="Tipo de Documento: " for="document_type"/>  
                     <h:selectOneMenu id="document_type" value="#{invoicemb.selectedDocumentypes}" required="true"

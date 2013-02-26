@@ -5,23 +5,16 @@
 package com.productosur.hive.managedbeans;
 
 import com.productosur.hive.dbcontrollermanager.ControllerManager;
-import com.productosur.hive.entities.Clients;
+import com.productosur.hive.dbcontrollers.exceptions.NonexistentEntityException;
 import com.productosur.hive.entities.Documentypes;
-import com.productosur.hive.entities.Manufacturers;
 import com.productosur.hive.entities.Orders;
-import com.productosur.hive.entities.Products;
-import com.productosur.hive.entities.Productstocks;
-import com.productosur.hive.entities.Purchases;
-import com.productosur.hive.entities.PurchasesLines;
+import com.productosur.hive.entities.Paynumberselections;
 import com.productosur.hive.entities.Subsidiaries;
 import com.productosur.hive.managedbeans.converters.DocumentTypeConverter;
-import com.productosur.hive.managedbeans.converters.ManufacturerConverter;
-import com.productosur.hive.managedbeans.converters.ProductConverter;
 import com.productosur.hive.util.JsfUtil;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +23,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -50,6 +42,7 @@ public class InvoiceMB {
     private Date invoiceDate;
     private Date expirationDate;
     private Integer invoiceNumber;
+    private String serial;
     private Subsidiaries client;
     private Orders activeOrder;
     
@@ -68,6 +61,7 @@ public class InvoiceMB {
         activeOrder = ControllerManager.getInstance().getOrdersJpaController().findActiveOrderEntity(client);
         invoiceDate = Calendar.getInstance().getTime();
         total = 0.0;
+        getNextInvoiceNumber();
     }
 
     public Double getTotal() {
@@ -157,6 +151,14 @@ public class InvoiceMB {
     public void setActiveOrder(Orders activeOrder) {
         this.activeOrder = activeOrder;
     }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
     
     public void handleDateSelect(SelectEvent event) {  
         try {  
@@ -183,7 +185,22 @@ public class InvoiceMB {
             
         }
         
-        
         return "../welcomePrimefaces.xhtml";
+    }
+    
+    private void getNextInvoiceNumber(){
+        Paynumberselections number = ControllerManager.getInstance().getPaynumberselectionsJpaController().findActiveInvoiceNumber();
+        if(number != null){
+            invoiceNumber = number.getCurrent();
+            serial = number.getSerial();
+            number.setCurrent(invoiceNumber + 1);
+            try {
+                ControllerManager.getInstance().getPaynumberselectionsJpaController().edit(number);
+            } catch (NonexistentEntityException ex) {
+                Logger.getLogger(InvoiceMB.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(InvoiceMB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

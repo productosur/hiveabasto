@@ -13,6 +13,7 @@ import com.productosur.hive.managedbeans.converters.ProductConverter;
 import com.productosur.hive.util.JsfUtil;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -183,9 +184,11 @@ public class SalesMB {
     
     public String saveOrder(){
         try {
+            order.setTotalPrice(total);
             if(isNew){
                 order.setSubsidiaryId(client);
                 order.setActive((short)1);
+                order.setDate(Calendar.getInstance().getTime());
                 ControllerManager.getInstance().getOrdersJpaController().create(order);
                 for (Orderlines ol : orderLinesList) {
                     ol.setOrderId(order);
@@ -222,6 +225,7 @@ public class SalesMB {
             isNew = true;
         }else{
             orderLinesList = (List<Orderlines>) order.getOrderlinesCollection();
+            total = order.getTotalPrice();
         }
         
     }

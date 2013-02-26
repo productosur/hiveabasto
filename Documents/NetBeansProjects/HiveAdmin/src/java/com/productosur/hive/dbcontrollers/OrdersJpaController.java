@@ -406,13 +406,15 @@ public class OrdersJpaController implements Serializable {
         }
     }
     
-     public Orders findActiveOrderEntity(Subsidiaries client) {
+    public Orders findActiveOrderEntity(Subsidiaries client) {
         EntityManager em = getEntityManager();
         try {
             Query q = em.createQuery("Select o from Orders o where o.subsidiaryId=:arg1 and o.active=1");
             q.setParameter("arg1", client);
             return (Orders) q.getSingleResult();
-        } finally {
+        } catch(Exception e){
+            return null;
+        }finally {
             em.close();
         }
     }

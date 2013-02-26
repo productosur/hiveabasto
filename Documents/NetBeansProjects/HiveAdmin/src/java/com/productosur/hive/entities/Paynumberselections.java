@@ -43,7 +43,7 @@ public class Paynumberselections implements Serializable {
     private Integer id;
     @Column(name = "from_")
     private Integer from;
-    @Column(name = "to")
+    @Column(name = "to_")
     private Integer to;
     @Column(name = "serial")
     private String serial;

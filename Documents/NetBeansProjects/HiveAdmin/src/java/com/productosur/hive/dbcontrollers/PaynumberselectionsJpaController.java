@@ -135,4 +135,17 @@ public class PaynumberselectionsJpaController implements Serializable {
         }
     }
     
+     public Paynumberselections findActiveInvoiceNumber() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createQuery("Select o from Paynumberselections o where o.active=1");
+         
+            return (Paynumberselections) q.getSingleResult();
+        } catch(Exception e){
+            return null;
+        }finally {
+            em.close();
+        }
+    }
+    
 }

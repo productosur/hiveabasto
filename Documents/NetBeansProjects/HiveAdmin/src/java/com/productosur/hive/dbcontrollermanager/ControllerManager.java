@@ -18,6 +18,7 @@ import com.productosur.hive.dbcontrollers.OrderlinesJpaController;
 import com.productosur.hive.dbcontrollers.OrdersJpaController;
 import com.productosur.hive.dbcontrollers.PaydocumentsJpaController;
 import com.productosur.hive.dbcontrollers.PaymentsJpaController;
+import com.productosur.hive.dbcontrollers.PaynumberselectionsJpaController;
 import com.productosur.hive.dbcontrollers.ProductsJpaController;
 import com.productosur.hive.dbcontrollers.ProductscategoriesJpaController;
 import com.productosur.hive.dbcontrollers.ProductstocksJpaController;
@@ -61,6 +62,7 @@ public class ControllerManager {
     private TrucksJpaController trucksJpaController;
     private ProductstocksJpaController productstocksJpaController;
     private DocumentypesJpaController documentypesJpaController;
+    private PaynumberselectionsJpaController paynumberselectionsJpaController;
     
 
     public ControllerManager() {
@@ -88,6 +90,7 @@ public class ControllerManager {
         this.trucksJpaController = new TrucksJpaController(emf);
         this.productstocksJpaController = new ProductstocksJpaController(emf);
         this.documentypesJpaController = new DocumentypesJpaController(emf);
+        this.paynumberselectionsJpaController = new PaynumberselectionsJpaController(emf);
     }
 
     public static ControllerManager getInstance(){
@@ -224,5 +227,13 @@ public class ControllerManager {
     public void setDocumentypesJpaController(DocumentypesJpaController documentypesJpaController) {
         this.documentypesJpaController = documentypesJpaController;
     }
-  
+
+    public PaynumberselectionsJpaController getPaynumberselectionsJpaController() {
+        return paynumberselectionsJpaController;
+    }
+
+    public void setPaynumberselectionsJpaController(PaynumberselectionsJpaController paynumberselectionsJpaController) {
+        this.paynumberselectionsJpaController = paynumberselectionsJpaController;
+    }
+   
 }
